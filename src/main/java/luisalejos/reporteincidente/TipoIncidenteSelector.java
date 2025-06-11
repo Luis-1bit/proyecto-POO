@@ -35,9 +35,9 @@ public class TipoIncidenteSelector extends JPanel {
         setPreferredSize(new Dimension(480, 360));
         
         ButtonGroup tipoIncidente = new ButtonGroup();
-        JRadioButton incidenteTecnico = new JRadioButton("1");
+        JRadioButton incidenteTecnico = new JRadioButton("");
         JRadioButton incidenteSeguridad = new JRadioButton("");
-        JRadioButton incidenteInstalacion = new JRadioButton("3");
+        JRadioButton incidenteInstalacion = new JRadioButton("");
         
         incidenteSeguridad.setActionCommand("seguridad");
         
@@ -46,14 +46,24 @@ public class TipoIncidenteSelector extends JPanel {
        
         
         ImageIcon iconoSeguridad = new ImageIcon("iconos/seguridad.png", "seguridad");
+        ImageIcon iconoInstalacion = new ImageIcon("iconos/instalacion.png", "instalacion");
+        ImageIcon iconoTecnico = new ImageIcon("iconos/tecnico.png", "tecnico");
+        
+        
         
         incidenteSeguridad.setBorder(bordeVacio);
         incidenteSeguridad.setBorderPainted(true);
+        incidenteTecnico.setBorder(bordeVacio);
+        incidenteTecnico.setBorderPainted(true);
+        incidenteInstalacion.setBorder(bordeVacio);
+        incidenteInstalacion.setBorderPainted(true);
         
         
         System.out.println(TipoIncidenteSelector.class.getResource("src/iconos/seguridad.png"));
         
         incidenteSeguridad.setIcon(iconoSeguridad);
+        incidenteInstalacion.setIcon(iconoInstalacion);
+        incidenteTecnico.setIcon(iconoTecnico);
        
         
         
@@ -96,6 +106,8 @@ public class TipoIncidenteSelector extends JPanel {
         incidenteSeguridad.addActionListener(listener);
         
         incidenteSeguridad.addItemListener(listener2);
+        incidenteInstalacion.addItemListener(listener2);
+        incidenteTecnico.addItemListener(listener2);
         
         add(incidenteInstalacion);
         add(incidenteTecnico);
