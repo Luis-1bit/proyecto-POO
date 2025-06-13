@@ -12,7 +12,7 @@ public class IncidenteDAO {
 
     public void crearIncidente(Incidente incidente) {
         Connection conn = null;
-
+        System.out.println(System.getProperty("user.dir"));
         // Sentencia SQL para la tabla base 'Incidentes'
         String sqlIncidenteBase = "INSERT INTO Incidentes (titulo, descripcion, fecha_reporte, estado, prioridad, dni_personal_reporta, tipo_incidente) VALUES (?, ?, now(), ?, ?, ?, ?)";
         
