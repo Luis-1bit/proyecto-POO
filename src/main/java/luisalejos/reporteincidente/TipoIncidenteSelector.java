@@ -4,8 +4,10 @@
  */
 package luisalejos.reporteincidente;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Paint;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
 /**
@@ -29,10 +32,46 @@ import javax.swing.border.Border;
 public class TipoIncidenteSelector extends JPanel {
     
     private String tipo;
+    private final JPanel iconsContainer;
 
     public TipoIncidenteSelector() {
     
-        setPreferredSize(new Dimension(480, 360));
+        setLayout(new BorderLayout());
+        
+        JPanel tituloContainer = new JPanel();
+        JLabel tituloLabel = new JLabel("Tipo de incidente");
+        JPanel tiposContainer = new JPanel();
+        
+        JPanel tecnicoContainer = new JPanel(new BorderLayout());
+        JPanel seguridadContainer = new JPanel(new BorderLayout());
+        JPanel instalacionContainer = new JPanel(new BorderLayout());
+        
+        
+        
+        
+        JLabel tecnicoLabel = new JLabel("Tecnico");
+        JLabel instalacionLabel = new JLabel("Instalacion");
+        JLabel seguridadLabel = new JLabel("Seguridad");
+       
+        tecnicoLabel.setHorizontalAlignment(JLabel.CENTER);
+        instalacionLabel.setHorizontalAlignment(JLabel.CENTER);
+        seguridadLabel.setHorizontalAlignment(JLabel.CENTER);
+        
+        tituloContainer.add(tituloLabel);
+        
+        FlowLayout layout = new FlowLayout();
+        
+        
+                
+        layout.setHgap(60);
+        layout.setVgap(10);
+       
+        iconsContainer = new JPanel();
+        iconsContainer.setLayout(layout);
+        
+        
+        
+        
         
         ButtonGroup tipoIncidente = new ButtonGroup();
         JRadioButton incidenteTecnico = new JRadioButton("");
@@ -40,15 +79,16 @@ public class TipoIncidenteSelector extends JPanel {
         JRadioButton incidenteInstalacion = new JRadioButton("");
         
         incidenteSeguridad.setActionCommand("seguridad");
+        incidenteInstalacion.setActionCommand("instalacion");
+        incidenteTecnico.setActionCommand("tecnico");
         
-        Border bordeSeleccionado = BorderFactory.createDashedBorder(Color.BLUE, 3,2,2,true);
-        Border bordeVacio = BorderFactory.createEmptyBorder(2, 2, 2, 2); // 
+        Border bordeSeleccionado = BorderFactory.createDashedBorder(Color.BLUE, 5,3,3,true);
+        Border bordeVacio = BorderFactory.createEmptyBorder(5, 5, 5, 5); // 
        
         
         ImageIcon iconoSeguridad = new ImageIcon("iconos/seguridad.png", "seguridad");
         ImageIcon iconoInstalacion = new ImageIcon("iconos/instalacion.png", "instalacion");
         ImageIcon iconoTecnico = new ImageIcon("iconos/tecnico.png", "tecnico");
-        
         
         
         incidenteSeguridad.setBorder(bordeVacio);
@@ -64,11 +104,7 @@ public class TipoIncidenteSelector extends JPanel {
         incidenteSeguridad.setIcon(iconoSeguridad);
         incidenteInstalacion.setIcon(iconoInstalacion);
         incidenteTecnico.setIcon(iconoTecnico);
-       
-        
-        
-        
-        
+             
         JButton test = new JButton("test");
         
         ActionListener listener = new ActionListener() {
@@ -92,11 +128,7 @@ public class TipoIncidenteSelector extends JPanel {
                     boton.setBorder(bordeVacio);
                 }
             };
-        
-        
-        
-        
-        
+              
         tipoIncidente.add(incidenteTecnico);
         tipoIncidente.add(incidenteSeguridad);
         tipoIncidente.add(incidenteInstalacion);
@@ -109,17 +141,23 @@ public class TipoIncidenteSelector extends JPanel {
         incidenteInstalacion.addItemListener(listener2);
         incidenteTecnico.addItemListener(listener2);
         
-        add(incidenteInstalacion);
-        add(incidenteTecnico);
-        add(incidenteSeguridad);
+        seguridadContainer.add(seguridadLabel, BorderLayout.NORTH);
+        instalacionContainer.add(instalacionLabel, BorderLayout.NORTH);
+        tecnicoContainer.add(tecnicoLabel, BorderLayout.NORTH);
+        
+        seguridadContainer.add(incidenteSeguridad, BorderLayout.SOUTH);
+        instalacionContainer.add(incidenteInstalacion, BorderLayout.SOUTH);
+        tecnicoContainer.add(incidenteTecnico, BorderLayout.SOUTH);
+        
+        iconsContainer.add(seguridadContainer);
+        iconsContainer.add(instalacionContainer);
+        iconsContainer.add(tecnicoContainer);
+                
         
         
-       
-    
-        add(test);
-        
-        
-        
+        add(tituloContainer, BorderLayout.NORTH);
+        add(iconsContainer);
+         
     }
     
     public static void main(String[] args) {
