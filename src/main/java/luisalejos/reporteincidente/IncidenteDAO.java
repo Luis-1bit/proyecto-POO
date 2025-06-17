@@ -37,7 +37,12 @@ public class IncidenteDAO {
                 pstmtBase.setString(2, incidente.getDescripcion());
                 pstmtBase.setString(3, incidente.getEstado());
                 pstmtBase.setString(4, incidente.getPrioridad());
-                pstmtBase.setString(5, incidente.getReportadoPor());
+            
+              
+                
+                
+                
+                pstmtBase.setString(5, incidente.getReportadoPor().getDniPersonal());
                
                 
                 // Asignar el tipo de incidente (discriminador)

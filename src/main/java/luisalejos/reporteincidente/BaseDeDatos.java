@@ -16,7 +16,7 @@ public class BaseDeDatos {
         private Properties props;
         
         private BaseDeDatos() {
-            url = "jdbc:postgresql://52.179.120.150/proyecto_poo_db";
+            url = "jdbc:postgresql://172.203.146.248/registro_incidentes_db";
             props = new Properties();
             props.setProperty("user", "alexis");
             props.setProperty("password", "123456");

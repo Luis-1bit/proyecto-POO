@@ -1,0 +1,15 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package luisalejos.reporteincidente;
+
+/**
+ *
+ * @author alexis
+ */
+public class PersonalSeguridad extends Personal {
+    
+    private String nivelDeSoporte;
+    
+}

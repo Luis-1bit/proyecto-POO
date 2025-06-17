@@ -5,6 +5,8 @@
 package luisalejos.reporteincidente;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -17,9 +19,11 @@ public abstract class Incidente {
     private String descripcion;
     private Timestamp fecha;
     private String estado;
-    private String reportadoPor; 
-    private String asignadoA;   
+    private PersonalOperativo reportadoPor; 
+    private PersonalSeguridad asignadoA;   
     private String prioridad;
+    private Adjunto adjunto;
+    private ArrayList<HistorialEscalamiento> historialDeEscalamientos;
 
     public String getId() {
         return id;
@@ -61,19 +65,19 @@ public abstract class Incidente {
         this.estado = estado;
     }
 
-    public String getReportadoPor() {
+    public PersonalOperativo getReportadoPor() {
         return reportadoPor;
     }
 
-    public void setReportadoPor(String reportadoPor) {
+    public void setReportadoPor(PersonalOperativo reportadoPor) {
         this.reportadoPor = reportadoPor;
     }
 
-    public String getAsignadoA() {
+    public PersonalSeguridad getAsignadoA() {
         return asignadoA;
     }
 
-    public void setAsignadoA(String asignadoA) {
+    public void setAsignadoA(PersonalSeguridad asignadoA) {
         this.asignadoA = asignadoA;
     }
 

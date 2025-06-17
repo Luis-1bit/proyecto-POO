@@ -1,7 +1,9 @@
 package luisalejos.reporteincidente;
 
+import java.security.CryptoPrimitive;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.UUID;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -14,27 +16,24 @@ import java.time.Instant;
  */
 public class Main {
     public static void main(String[] args) {
-         IncidenteTecnico nuevoIncidente = new IncidenteTecnico();
         
-        // Datos para la tabla base 'Incidentes'
+       IncidenteDAO ind = new IncidenteDAO();
+       IncidenteTecnico it = new IncidenteTecnico();
        
-        nuevoIncidente.setTitulo("El proyector de la sala de juntas no enciende");
-        nuevoIncidente.setDescripcion("El proyector marca Epson no da señal de video al conectar una laptop.");
-        nuevoIncidente.setEstado("abierto");
-        nuevoIncidente.setPrioridad("media");
-        nuevoIncidente.setReportadoPor("12345678"); // ID de Ana Torres
-            // ID de Lucia Fernandez
-        
-        // Datos específicos para 'Incidentes_Tecnico'
-        nuevoIncidente.setDispositivoAfectado("Proyector");
-        nuevoIncidente.setMarca("Epson");
-        nuevoIncidente.setModelo("PowerLite S41+");
-        nuevoIncidente.setNumeroSerie("EPS-PL-98765");
-        nuevoIncidente.setUbicacion("Sala de Juntas, Piso 4");
-
-        // 2. Usar el DAO para guardarlo en la base de datos
-        IncidenteDAO dao = new IncidenteDAO();
-        dao.crearIncidente(nuevoIncidente);
+       it.setTitulo("servidor no funciona");
+       it.setDescripcion("el dispositivo estaba funcionando de manera correcta hasta hoy en la mañana");
+       it.setEstado("abierto");
+       it.setPrioridad("baja");
+       
+       
+       
+       it.setDispositivoAfectado("Servidor");
+       it.setMarca("DELL");
+       it.setModelo("DX-2301H");
+       it.setNumeroSerie("1023-2025");
+       it.setUbicacion("Piso 2 - Lab 201");
+       
+       ind.crearIncidente(it);
     }
     
 }

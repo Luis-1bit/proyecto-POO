@@ -1,0 +1,66 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package luisalejos.reporteincidente;
+
+import org.mindrot.jbcrypt.BCrypt;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class AuthService {
+
+    public boolean registrarUsuario(String dniPersonal, String password, String nombre, String apellido) {
+        // Genera el salt y hashea la contraseña
+        String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
+        String sql = "INSERT INTO personal (dni_personal, password, nombre, apellido) VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = BaseDeDatos.getInstance().getConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, dniPersonal);
+            pstmt.setString(2, passwordHash);
+            pstmt.setString(3, nombre);
+            pstmt.setString(4, apellido);
+            
+            int affectedRows = pstmt.executeUpdate();
+            
+            return affectedRows > 0;
+
+        } catch (SQLException e) {
+            // Maneja errores de duplicados (código de error de PostgreSQL para unique_violation es '23505')
+            if ("23505".equals(e.getSQLState())) {
+                System.err.println("Error: El nombre de usuario o el email ya existen.");
+            } else {
+                System.err.println("Error de base de datos: " + e.getMessage());
+            }
+            return false;
+        }
+    }
+
+    public boolean verificarCredenciales(String dniPersonal, String password) {
+        String sql = "SELECT password FROM personal WHERE dni_personal = ?";
+        
+        try (Connection conn = BaseDeDatos.getInstance().getConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, dniPersonal);
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    String passwordHashGuardado = rs.getString("password");
+                    // Compara la contraseña ingresada con el hash guardado
+                    return BCrypt.checkpw(password, passwordHashGuardado);
+                } else {
+                    // El usuario no existe
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error de base de datos: " + e.getMessage());
+            return false;
+        }
+    }
+}
