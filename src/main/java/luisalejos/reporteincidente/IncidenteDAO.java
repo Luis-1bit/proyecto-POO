@@ -74,12 +74,10 @@ public class IncidenteDAO {
             System.out.println("Incidente creado exitosamente!");
 
         } catch (SQLException e) {
-            System.err.println("Error en la transacción. Realizando rollback...");
             e.printStackTrace();
             if (conn != null) {
                 try {
-                    // ---> REVERTIR LA TRANSACCIÓN <---
-                    // Si algo falló, se deshacen todos los cambios desde el setAutoCommit(false).
+                    
                     conn.rollback();
                 } catch (SQLException ex) {
                     ex.printStackTrace();
@@ -88,7 +86,7 @@ public class IncidenteDAO {
         } finally {
             if (conn != null) {
                 try {
-                    conn.setAutoCommit(true); // Restaurar el modo por defecto
+                    conn.setAutoCommit(true);
                     conn.close(); // Cerrar la conexión
                 } catch (SQLException e) {
                     e.printStackTrace();

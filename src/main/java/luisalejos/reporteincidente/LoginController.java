@@ -10,7 +10,7 @@ package luisalejos.reporteincidente;
  */
 public class LoginController {
     private AppModel modelo;
-    private VistaInicioOperativo vista;
+    private VistaLogin vista;
     private AppController appController; // Para poder navegar
 
     public LoginController(AppModel modelo, VistaLogin vista, AppController appController) {
@@ -18,21 +18,27 @@ public class LoginController {
         this.vista = vista;
         this.appController = appController;
 
-        // Añadir listener al botón de la vista
-        this.vista.addLoginListener(e -> autenticarUsuario());
+        
+        this.vista.addLoginListener(e -> autenticarUsuario() );
     }
 
+    
     private void autenticarUsuario() {
+      
+        
         String user = vista.getUsuario();
         String pass = vista.getPassword();
-
+       
+        
         if (modelo.autenticar(user, pass)) {
-            // Si la autenticación en el modelo es exitosa...
-            // ...le pedimos al controlador principal que cambie de vista.
-            appController.mostrarDashboard();
+            
+            appController.mostrarInicioOperativo();
+            
         } else {
             // Manejar error (en una app real)
             System.out.println("Credenciales incorrectas");
         }
+        
     }
+
 }

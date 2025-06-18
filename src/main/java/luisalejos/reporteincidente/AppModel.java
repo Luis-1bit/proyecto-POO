@@ -27,9 +27,23 @@ public class AppModel {
 
     // Lógica de negocio: autenticar usuario
     public boolean autenticar(String user, String pass) {
+         AuthService authService = new AuthService();
         // Simulación: en una app real, aquí se consultaría una base de datos.
-        return new AuthService().verificarCredenciales(pass, pass);
-       
+        if (authService.verificarCredenciales(user, pass)) {
+            
+            
+            System.out.println(user);
+            Personal usuario = new AuthService().obtenerDatosPersonalPorDni(user);
+            
+            if(usuario != null) {
+                this.setUsuarioLogueado(usuario);
+                return true;
+            }
+           
+            
+        }
+        this.personalLogueado = null;
+        return false;
     }
 
     public void cerrarSesion() {

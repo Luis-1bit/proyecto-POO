@@ -43,6 +43,8 @@ public class AuthService {
     public boolean verificarCredenciales(String dniPersonal, String password) {
         String sql = "SELECT password FROM personal WHERE dni_personal = ?";
         
+        
+        
         try (Connection conn = BaseDeDatos.getInstance().getConexion();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -52,9 +54,11 @@ public class AuthService {
                 if (rs.next()) {
                     String passwordHashGuardado = rs.getString("password");
                     // Compara la contraseña ingresada con el hash guardado
+                    
                     return BCrypt.checkpw(password, passwordHashGuardado);
                 } else {
                     // El usuario no existe
+                    System.out.println("no existe");
                     return false;
                 }
             }
@@ -62,5 +66,62 @@ public class AuthService {
             System.err.println("Error de base de datos: " + e.getMessage());
             return false;
         }
+    
     }
+    
+    public Personal obtenerDatosPersonalPorDni(String dniPersonal) {
+       
+       String sql = "SELECT dni_personal, nombre, apellido, nivel_soporte, rol FROM personal WHERE dni_personal = '73576762'";
+       Personal personal = null;
+       
+       try (Connection conn = BaseDeDatos.getInstance().getConexion();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+           
+           
+           
+           try (ResultSet rs = pstmt.executeQuery()) {
+               if(rs.next()) {
+                   
+                String rol = rs.getString("rol");
+               
+                if("seguridad".equals(rol)) {
+                    PersonalSeguridad personalSeguridad = new PersonalSeguridad();
+                    
+                    String nivel = rs.getString("nivel_soporte");
+                    personalSeguridad.setNivelDeSoporte(nivel);
+                    
+                    personal = personalSeguridad;
+                   
+                            
+                } else if ("operativo".equals(rol)) {
+                   personal = new PersonalOperativo();
+                }
+               
+                // Llenamos el objeto con los datos de la base de datos
+                personal.setDniPersonal(rs.getString("dni_personal"));
+                personal.setNombre(rs.getString("nombre"));
+                personal.setApellido(rs.getString("apellido"));
+                
+                //personal.setCorreo(rs.getString("correo"));
+               
+}   
+           }
+           
+       } catch(SQLException e){
+            System.err.println("Error al obtener datos del personal: " + e.getMessage());
+        // Es buena idea registrar el error completo
+            e.printStackTrace();
+       }
+       
+       return personal;
+       
+    } 
+    
+ 
+    
+   
+
+        
+  
+    
 }

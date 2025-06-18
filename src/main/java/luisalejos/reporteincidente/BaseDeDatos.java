@@ -16,29 +16,28 @@ public class BaseDeDatos {
         private Properties props;
         
         private BaseDeDatos() {
-            url = "jdbc:postgresql://172.203.146.248/registro_incidentes_db";
-            props = new Properties();
-            props.setProperty("user", "alexis");
-            props.setProperty("password", "123456");
-            try {
-                conexion = DriverManager.getConnection(url, props);
-                System.out.println("conexion establecida");
-            } catch(SQLException e) {
-                e.printStackTrace();
-            }
+            
             
         }
         
        
-        public static BaseDeDatos getInstance() {
+        public static synchronized BaseDeDatos getInstance() {
             if(instancia == null) {
                 instancia = new BaseDeDatos();
             }
             return instancia;
         }
         
-        public Connection getConexion() {
-            return conexion;
+        public Connection getConexion() throws SQLException {
+            
+            url = "jdbc:postgresql://172.203.146.248/registro_incidentes_db";
+            props = new Properties();
+            props.setProperty("user", "alexis");
+            props.setProperty("password", "123456");
+            
+            return DriverManager.getConnection(url, props);
+                
+        
         }
         
         public void cerrarConexion() {

@@ -1,9 +1,12 @@
 package luisalejos.reporteincidente;
 
+import java.awt.CardLayout;
 import java.security.CryptoPrimitive;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.UUID;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -17,23 +20,35 @@ import java.util.UUID;
 public class Main {
     public static void main(String[] args) {
         
-       IncidenteDAO ind = new IncidenteDAO();
-       IncidenteTecnico it = new IncidenteTecnico();
+       AppModel modelo = new AppModel();
        
-       it.setTitulo("servidor no funciona");
-       it.setDescripcion("el dispositivo estaba funcionando de manera correcta hasta hoy en la mañana");
-       it.setEstado("abierto");
-       it.setPrioridad("baja");
+       VistaLogin vistaLogin = new VistaLogin();
+       VistaInicioOperativo vistaInicioOperativo = new VistaInicioOperativo();
+       VistaListaIncidentes vistaListaIncidentes = new VistaListaIncidentes();
        
+       CardLayout cardLayout = new CardLayout();
+        JPanel contenedorVistas = new JPanel(cardLayout);
+        contenedorVistas.add(vistaLogin, "login");
+        contenedorVistas.add(vistaInicioOperativo, "inicioOperativo");
+        contenedorVistas.add(vistaListaIncidentes, "listaIncidentes");
        
+        AppController appController = new AppController(contenedorVistas, cardLayout);
        
-       it.setDispositivoAfectado("Servidor");
-       it.setMarca("DELL");
-       it.setModelo("DX-2301H");
-       it.setNumeroSerie("1023-2025");
-       it.setUbicacion("Piso 2 - Lab 201");
+        new LoginController(modelo, vistaLogin, appController);
        
-       ind.crearIncidente(it);
+        appController.setInicioOperativoController(new InicioOperativoController(modelo, vistaInicioOperativo, appController));
+    
+    
+        JFrame ventana = new JFrame("Registro de incidentes");
+        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ventana.add(contenedorVistas);
+        ventana.pack(); // Ajusta el tamaño al contenido
+        ventana.setLocationRelativeTo(null); // Centra la ventana
+
+        // 7. Iniciar en la vista de login y hacer visible
+        appController.mostrarLogin();
+        ventana.setVisible(true);
+        
     }
     
 }

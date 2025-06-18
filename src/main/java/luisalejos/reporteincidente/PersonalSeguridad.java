@@ -11,5 +11,14 @@ package luisalejos.reporteincidente;
 public class PersonalSeguridad extends Personal {
     
     private String nivelDeSoporte;
+
+    public String getNivelDeSoporte() {
+        return nivelDeSoporte;
+    }
+
+    public void setNivelDeSoporte(String nivelDeSoporte) {
+        this.nivelDeSoporte = nivelDeSoporte;
+    }
+    
     
 }

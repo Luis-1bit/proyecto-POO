@@ -15,7 +15,15 @@ public class AppController {
     
     private JPanel contenedorVistas;
     private CardLayout cardLayout;
-
+    private InicioOperativoController inicioOperativoController;
+    private ListaIncidentesController listaIncidentesController;
+    
+    
+    public void setInicioOperativoController(InicioOperativoController controller) {
+        this.inicioOperativoController = controller;
+    }
+    
+    
     public AppController(JPanel contenedor, CardLayout layout) {
         this.contenedorVistas = contenedor;
         this.cardLayout = layout;
@@ -26,7 +34,17 @@ public class AppController {
     }
 
     public void mostrarInicioOperativo() {
+        if (inicioOperativoController != null) {
+            inicioOperativoController.cargarDatos();
+        }
         cardLayout.show(contenedorVistas, "inicioOperativo");
+    }
+
+    void mostrarListaIncidentes() {
+        if (listaIncidentesController != null) {
+            
+        }
+        cardLayout.show(contenedorVistas, "listaIncidentes");
     }
     
     
